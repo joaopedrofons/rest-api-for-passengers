@@ -1,0 +1,5 @@
+package site.de.passagens.REST.API.repository;
+
+public class AirplaneRepository {
+
+}

@@ -1,0 +1,77 @@
+package controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import entity.Airline;
+import exception.ResourceNotFoundException;
+import service.AirlineService;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/airlines")
+public class AirlineController {
+
+    private final AirlineService airlineService;
+    private static final Logger logger = LoggerFactory.getLogger(AirlineController.class);
+
+    @Autowired
+    public AirlineController(AirlineService airlineService) {
+        this.airlineService = airlineService;
+    }
+
+    // Create
+    @PostMapping
+    public Airline createAirLine(@RequestBody Map<String, String> body) {
+        String name = body.get("name");
+        logger.info("createAirLine called with name: " + name);
+        return airlineService.createAirLine(name);
+    }
+
+    // Read All
+    @GetMapping
+    public List<Airline> getAllAirlines() {
+        logger.info("getAllAirlines called");
+        return airlineService.getAllAirlines();
+    }
+
+    // Read One
+    @GetMapping("/{id}")
+    public Airline getAirline(@PathVariable Long id) {
+        Airline airline = airlineService.findById(id);
+        if (airline != null) {
+            return airline;
+        } else {
+            throw new ResourceNotFoundException("Airline not found with id " + id);
+        }
+    }
+
+    // Update
+    @PutMapping("/{id}")
+    public Airline updateAirline(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        Airline airline = airlineService.findById(id);
+        if (airline != null) {
+            String name = body.get("name");
+            airline.setName(name);
+            airlineService.save(airline);
+            return airline;
+        } else {
+            throw new ResourceNotFoundException("Airline not found with id " + id);
+        }
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public void deleteAirline(@PathVariable Long id) {
+        Airline airline = airlineService.findById(id);
+        if (airline != null) {
+            airlineService.delete(airline);
+        } else {
+            throw new ResourceNotFoundException("Airline not found with id " + id);
+        }
+    }
+}

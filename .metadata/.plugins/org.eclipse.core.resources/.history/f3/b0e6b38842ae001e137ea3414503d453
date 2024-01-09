@@ -1,0 +1,78 @@
+package controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import entity.Airline;
+import service.AirlineService;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/airlines")
+public class AirlineController {
+
+    private final AirlineService airlineService;
+    private static final Logger logger = LoggerFactory.getLogger(AirlineController.class);
+
+    @Autowired
+    public AirlineController(AirlineService airlineService) {
+        this.airlineService = airlineService;
+    }
+
+    // Create
+    @PostMapping
+    public Airline createAirLine(@RequestBody Map<String, String> body) {
+        String name = body.get("name");
+        logger.info("createAirLine called with name: " + name);
+        return airlineService.createAirLine(name);
+    }
+
+    // Read All
+    @GetMapping
+    public List<Airline> getAllAirlines() {
+        logger.info("getAllAirlines called");
+        return airlineService.getAllAirlines();
+    }
+
+    // Read One
+    @GetMapping("/{id}")
+    public ResponseEntity<Airline> getAirline(@PathVariable Long id) {
+        try {
+            Airline airline = airlineService.findById(id);
+            return ResponseEntity.ok(airline);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Update
+    @PutMapping("/{id}")
+    public ResponseEntity<Airline> updateAirline(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        try {
+            Airline airline = airlineService.findById(id);
+            String name = body.get("name");
+            airline.setName(name);
+            airlineService.save(airline);
+            return ResponseEntity.ok(airline);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAirline(@PathVariable Long id) {
+        try {
+            Airline airline = airlineService.findById(id);
+            airlineService.delete(airline);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}

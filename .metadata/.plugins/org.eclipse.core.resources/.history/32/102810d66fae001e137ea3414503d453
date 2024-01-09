@@ -1,0 +1,5 @@
+package site.de.passagens.REST.API.controller;
+
+public class AirplaneController {
+
+}

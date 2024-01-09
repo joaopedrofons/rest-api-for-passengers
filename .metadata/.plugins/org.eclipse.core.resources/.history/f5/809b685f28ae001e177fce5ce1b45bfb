@@ -1,0 +1,64 @@
+package service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import entity.Airline;
+import repository.AirlineRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AirlineService {
+
+    private final AirlineRepository airlineRepository;
+
+    @Autowired
+    public AirlineService(AirlineRepository airlineRepository) {
+        this.airlineRepository = airlineRepository;
+    }
+
+    public Airline createAirLine(String name) {
+        validateAirlineName(name);
+        Airline airline = new Airline(name.trim());
+        return airlineRepository.save(airline);
+    }
+
+    private void validateAirlineName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Airline name cannot be null or empty.");
+        }
+    }
+
+    public Optional<Airline> findByName(String name) {
+        return airlineRepository.findByName(name);
+    }
+
+    public List<Airline> getAllAirlines() {
+        return airlineRepository.findAll();
+    }
+
+    public void save(Airline airline) {
+        validateAirline(airline);
+        airline.setName(airline.getName().trim());
+        airlineRepository.save(airline);
+    }
+
+    private void validateAirline(Airline airline) {
+        if (airline == null) {
+            throw new IllegalArgumentException("Airline cannot be null.");
+        }
+        if (airline.getName() == null || airline.getName().isEmpty()) {
+            throw new IllegalArgumentException("Airline name cannot be null or empty.");
+        }
+    }
+
+    public void delete(Airline airline) {
+        airlineRepository.delete(airline);
+    }
+
+    public Optional<Airline> findById(Long id) {
+        return airlineRepository.findById(id);
+    }
+}
