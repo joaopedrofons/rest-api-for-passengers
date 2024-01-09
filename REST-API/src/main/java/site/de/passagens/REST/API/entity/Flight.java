@@ -190,4 +190,24 @@ public class Flight {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void setModel(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setMaxCapacity(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Short getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Short getMaxCapacity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

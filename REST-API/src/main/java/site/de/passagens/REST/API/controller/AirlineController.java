@@ -9,6 +9,7 @@ import site.de.passagens.REST.API.entity.Airline;
 import site.de.passagens.REST.API.service.AirlineService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/airlines")
@@ -23,8 +24,10 @@ public class AirlineController {
     }
 
     @PostMapping
-    public Airline createAirLine(@RequestBody Airline airline) {
-        logger.info("createAirLine chamado com nome: " + airline.getName());
+    public Airline createAirLine(@RequestBody Map<String, String> body) {
+        logger.info("createAirLine chamado com nome: " + body.get("name"));
+        Airline airline = new Airline();
+        airline.setName(body.get("name"));
         return airlineService.createAirLine(airline);
     }
 

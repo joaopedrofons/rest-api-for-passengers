@@ -38,4 +38,9 @@ public class AirplaneController {
     public void deleteAirplane(@PathVariable Long id) {
         airplaneService.deleteAirplane(id);
     }
+
+	public int getTotalCapacity(String airlineName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -81,4 +81,9 @@ public class Ticket {
         // Implemente a lógica de validação do RG aqui
         return rg != null && rg.length() >= 5 && rg.length() <= 14 && rg.chars().allMatch(Character::isLetterOrDigit);
     }
+
+	public void setId(long l) {
+		// TODO Auto-generated method stub
+		
+	}
 }
