@@ -1,0 +1,60 @@
+package site.de.passagens.REST.API.entitytest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import site.de.passagens.REST.API.entity.Airline;
+import site.de.passagens.REST.API.entity.Airplane;
+
+
+public class AirplaneTest {
+    private Airplane airplane;
+    private Airline airline;
+
+    private static final String AIRLINE_NAME = "Airline Test";
+    private static final String MODEL_NAME = "Boeing 747";
+    private static final String NEW_MODEL_NAME = "Airbus A380";
+    private static final int MAX_CAPACITY = 366;
+    private static final int NEW_MAX_CAPACITY = 853;
+
+    @BeforeEach
+    public void setUp() {
+        airline = new Airline();
+        airplane = new Airplane(MODEL_NAME, MAX_CAPACITY, airline);
+    }
+
+    @Test
+    public void testGetModel() {
+        assertEquals(MODEL_NAME, airplane.getModel());
+    }
+
+    @Test
+    public void testSetModel() {
+        airplane.setModel(NEW_MODEL_NAME);
+        assertEquals(NEW_MODEL_NAME, airplane.getModel());
+    }
+
+    @Test
+    public void testGetMaxCapacity() {
+        assertEquals(MAX_CAPACITY, airplane.getMaxCapacity());
+    }
+
+    @Test
+    public void testSetMaxCapacity() {
+        airplane.setMaxCapacity(NEW_MAX_CAPACITY);
+        assertEquals(NEW_MAX_CAPACITY, airplane.getMaxCapacity());
+    }
+
+    @Test
+    public void testGetAirline() {
+        assertEquals(airline, airplane.getAirline());
+    }
+
+    @Test
+    public void testSetAirline() {
+        Airline newAirline = new Airline();
+        airplane.setAirline(newAirline);
+        assertEquals(newAirline, airplane.getAirline());
+    }
+}
