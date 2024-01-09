@@ -2,6 +2,8 @@ package site.de.passagens.REST.API.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import site.de.passagens.REST.API.entity.Airline;
 import site.de.passagens.REST.API.entity.Airplane;
 import site.de.passagens.REST.API.repository.AirplaneRepository;
 
@@ -44,4 +46,14 @@ public class AirplaneService {
     public void deleteAirplane(Long id) {
         airplaneRepository.deleteById(id);
     }
+
+	public Airplane createAirplane(String testModel, int maxCapacity, Airline airline) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getTotalCapacity(Airline airline) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

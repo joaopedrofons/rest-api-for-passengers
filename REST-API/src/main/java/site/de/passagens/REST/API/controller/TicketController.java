@@ -1,11 +1,21 @@
 package site.de.passagens.REST.API.controller;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import site.de.passagens.REST.API.entity.Ticket;
+import site.de.passagens.REST.API.service.TicketService;
+
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
 
+    private final TicketService ticketService;
+
     @Autowired
-    private TicketService ticketService;
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
 
     @GetMapping
     public List<Ticket> getAllTickets() {

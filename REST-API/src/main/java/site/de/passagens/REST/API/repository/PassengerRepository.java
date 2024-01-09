@@ -1,5 +1,13 @@
 package site.de.passagens.REST.API.repository;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import site.de.passagens.REST.API.entity.Passenger;
+
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
    
@@ -13,4 +21,7 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
    
     List<Passenger> findByRg(String rg);
+
+
+	Optional<Passenger> findById(Long id);
 }

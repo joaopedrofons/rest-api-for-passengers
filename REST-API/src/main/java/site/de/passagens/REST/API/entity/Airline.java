@@ -18,7 +18,7 @@ public class Airline {
     @OneToMany(mappedBy = "airline", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Airplane> airplanes = new ArrayList<>();
 
-    protected Airline() {
+    public Airline() {
     }
 
     public Airline(String name) {

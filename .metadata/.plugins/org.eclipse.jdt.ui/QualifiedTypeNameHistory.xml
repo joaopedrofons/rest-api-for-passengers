@@ -1,2 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="entity.Airline"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.repository.AirlineRepository"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.service.AirlineService"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.service.PassengerService"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GeneratedValue"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GenerationType"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.repository.PassengerRepository"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.NotFoundException.PassengerNotFoundException"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.DeleteMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.service.StopoverService"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.service.FlightService"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.repository.StopoverRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.repository.TicketRpository"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Ticket"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.NotFoundException.TicketNotFoundException"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Airplane"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.FlightClass"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Airline"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Passenger"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.BeforeEach"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Stopover"/>
+    <fullyQualifiedTypeName name="java.time.Duration"/>
+    <fullyQualifiedTypeName name="org.assertj.core.api.Assertions"/>
+    <fullyQualifiedTypeName name="site.de.passagens.REST.API.entity.Flight"/>
+</qualifiedTypeNameHistroy>

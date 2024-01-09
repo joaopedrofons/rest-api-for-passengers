@@ -17,53 +17,60 @@ public class Ticket {
     private String cpf;
     private String rg;
 
+    public Ticket() {
+        if (isCpfValid(cpf) && isRgValid(rg)) {
+            this.name = name;
+            this.passportNumber = passportNumber;
+            this.cpf = cpf;
+            this.rg = rg;
+        } else {
+            throw new IllegalArgumentException("CPF ou RG inválido");
+        }
+    }
+
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getPassportNumber() {
+        return passportNumber;
+    }
 
-	public String getPassportNumber() {
-		return passportNumber;
-	}
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
 
-	public void setPassportNumber(String passportNumber) {
-		this.passportNumber = passportNumber;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public void setCpf(String cpf) {
+        if (isCpfValid(cpf)) {
+            this.cpf = cpf;
+        } else {
+            throw new IllegalArgumentException("CPF inválido");
+        }
+    }
 
-	public void setCpf(String cpf) {
-		if (isCpfValid(cpf)) {
-			this.cpf = cpf;
-		} else {
-			throw new IllegalArgumentException("CPF inválido");
-		}
-	}
+    public String getRg() {
+        return rg;
+    }
 
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		if (isRgValid(rg)) {
-			this.rg = rg;
-		} else {
-			throw new IllegalArgumentException("RG inválido");
-		}
-	}
+    public void setRg(String rg) {
+        if (isRgValid(rg)) {
+            this.rg = rg;
+        } else {
+            throw new IllegalArgumentException("RG inválido");
+        }
+    }
 
     public boolean isCpfValid(String cpf) {
         // Implemente a lógica de validação do CPF aqui

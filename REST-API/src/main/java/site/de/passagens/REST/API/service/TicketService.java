@@ -1,21 +1,32 @@
 package site.de.passagens.REST.API.service;
 
+import java.util.List;
+import org.springframework.stereotype.Service;
+import site.de.passagens.REST.API.entity.Ticket;
+import site.de.passagens.REST.API.repository.TicketRepository;
+import site.de.passagens.REST.API.NotFoundException.TicketNotFoundException;
+
 @Service
 public class TicketService {
 
-    @Autowired
-    private TicketRpository ticketRpository;
+    private final TicketRepository ticketRepository;
+
+    public TicketService(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
 
     public List<Ticket> getAllTickets() {
-        return ticketRpository.findAll();
+        return ticketRepository.findAll();
     }
 
     public Ticket getTicket(Long id) {
-        return ticketRpository.findById(id).orElse(null);
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new TicketNotFoundException("Ticket with id " + id + " does not exist"));
     }
 
     public Ticket createTicket(Ticket ticket) {
-        return ticketRpository.save(ticket);
+        // Adicione aqui a validação do ticket
+        return ticketRepository.save(ticket);
     }
 
     public Ticket updateTicket(Long id, Ticket ticketDetails) {
@@ -25,15 +36,17 @@ public class TicketService {
             ticket.setPassportNumber(ticketDetails.getPassportNumber());
             ticket.setCpf(ticketDetails.getCpf());
             ticket.setRg(ticketDetails.getRg());
-            return ticketRpository.save(ticket);
+            return ticketRepository.save(ticket);
         }
-        return null;
+        throw new TicketNotFoundException("Ticket with id " + id + " does not exist");
     }
 
     public void deleteTicket(Long id) {
         Ticket ticket = getTicket(id);
         if(ticket != null) {
-            ticketRpository.delete(ticket);
+            ticketRepository.delete(ticket);
+        } else {
+            throw new TicketNotFoundException("Ticket with id " + id + " does not exist");
         }
     }
 }

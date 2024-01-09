@@ -52,4 +52,9 @@ public class FlightService {
     public List<Flight> getFlightsByFlightNumber(String flightNumber) {
         return flightRepository.findFlightsByFlightNumber(flightNumber);
     }
+
+	public Flight findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

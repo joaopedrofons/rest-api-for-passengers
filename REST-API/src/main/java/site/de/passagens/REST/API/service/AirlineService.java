@@ -54,4 +54,9 @@ public class AirlineService {
     public Airline findById(Long id) {
         return airlineRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid airline ID: " + id));
     }
+
+	public Airline createAirLine(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

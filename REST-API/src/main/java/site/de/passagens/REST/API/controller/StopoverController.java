@@ -1,5 +1,16 @@
 package site.de.passagens.REST.API.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import site.de.passagens.REST.API.entity.Flight;
+import site.de.passagens.REST.API.entity.Stopover;
+import site.de.passagens.REST.API.service.FlightService;
+import site.de.passagens.REST.API.service.StopoverService;
+
 @RestController
 @RequestMapping("/api/stopovers")//
 public class StopoverController {
