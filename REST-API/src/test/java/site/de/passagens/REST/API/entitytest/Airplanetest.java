@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 
 public class AirplaneTest {

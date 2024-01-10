@@ -17,3 +17,14 @@
 1704813710022	Delete element
 1704815312982	Delete element
 1704816965873	Delete element
+1704830153367	Rename resource 'REST'
+1704830173992	Rename resource 'API'
+1704830593661	Rename package 'site.de.passagens.REST.API'
+1704830634423	Rename package 'site.de.passagens.REST.API.controller'
+1704830734509	Rename package 'site.de.passagens.REST.API.service'
+1704830747576	Rename package 'site.de.passagens.REST.API.repository'
+1704830766127	Rename package 'site.de.passagens.REST.API.NotFoundException'
+1704830782559	Rename package 'site.de.passagens.REST.API.entity'
+1704885631104	Delete element
+1704886189771	Delete element
+1704887624336	Delete element

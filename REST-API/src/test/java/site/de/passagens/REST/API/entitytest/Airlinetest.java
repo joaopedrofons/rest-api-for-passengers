@@ -1,11 +1,11 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.entity.Airplane;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
 
 public class AirlineTest {
     // Os testes existentes permanecem os mesmos...

@@ -1,0 +1,45 @@
+package site.de.passagens.restapi.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.repository.AirplaneRepository;
+
+@Service
+public class AirplaneService {
+
+    private final AirplaneRepository airplaneRepository;
+
+    @Autowired
+    public AirplaneService(AirplaneRepository airplaneRepository) {
+        this.airplaneRepository = airplaneRepository;
+    }
+
+    public Airplane createAirplane(String model, int maxCapacity, Airline airline) {
+        return airplaneRepository.save(new Airplane(model, maxCapacity, airline));
+    }
+
+    public int getTotalCapacity(Airline airline) {
+        List<Airplane> airplanes = (List<Airplane>) airplaneRepository.findByAirline(airline);
+        return airplanes.stream().mapToInt(Airplane::getMaxCapacity).sum();
+    }
+
+	public List<Airplane> getAllAirplanes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Airplane getAirplaneById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Airplane createAirplane(Airplane airplane) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

@@ -1,16 +1,16 @@
-package site.de.passagens.REST.API.controllertest;
+package site.de.passagens.rest.api.controllertest;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import site.de.passagens.REST.API.RestApiApplication;
-import site.de.passagens.REST.API.controller.StopoverController;
-import site.de.passagens.REST.API.entity.Flight;
-import site.de.passagens.REST.API.entity.Stopover;
-import site.de.passagens.REST.API.service.FlightService;
-import site.de.passagens.REST.API.service.StopoverService;
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.controller.StopoverController;
+import site.de.passagens.restapi.entity.Flight;
+import site.de.passagens.restapi.entity.Stopover;
+import site.de.passagens.restapi.service.FlightService;
+import site.de.passagens.restapi.service.StopoverService;
 
 import java.time.Duration;
 

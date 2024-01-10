@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,8 +7,8 @@ import java.time.Duration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.entity.Flight;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Flight;
 
 public class FlighTtest {
     private Flight flight;

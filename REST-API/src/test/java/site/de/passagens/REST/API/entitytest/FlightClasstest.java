@@ -1,10 +1,10 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import site.de.passagens.REST.API.entity.FlightClass;
+import site.de.passagens.restapi.entity.FlightClass;
 
 public class FlightClassTest {
 

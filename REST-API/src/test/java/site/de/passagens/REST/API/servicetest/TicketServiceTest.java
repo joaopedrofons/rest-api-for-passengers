@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.servicetest;
+package site.de.passagens.rest.api.servicetest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,9 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import site.de.passagens.REST.API.entity.Ticket;
-import site.de.passagens.REST.API.repository.TicketRepository;
-import site.de.passagens.REST.API.service.TicketService;
+import site.de.passagens.restapi.entity.Ticket;
+import site.de.passagens.restapi.repository.TicketRepository;
+import site.de.passagens.restapi.service.TicketService;
 
 import static org.mockito.Mockito.*;
 import java.util.Arrays;

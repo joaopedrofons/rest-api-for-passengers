@@ -1,0 +1,67 @@
+package site.de.passagens.rest.api.controllertest;
+
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.controller.AirplaneController;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.service.AirlineService;
+import site.de.passagens.restapi.service.AirplaneService;
+
+@SpringBootTest(classes = RestApiApplication.class)
+public class AirplaneControllerTest {
+
+    @InjectMocks
+    AirplaneController airplaneController;
+
+    @Mock
+    AirplaneService airplaneService;
+
+    @Mock
+    AirlineService airlineService;
+
+    @Test
+    public void testCreateAirplane() {
+        Airplane airplane = new Airplane();
+        airplane.setModel("Model Test");
+        airplane.setMaxCapacity(200);
+
+        Optional<Airline> airline = new Airline();
+        airline.setName("Airline Test");
+
+        airplane.setAirline(airline); // Adicione esta linha
+
+        when(airlineService.findByName(airplane.getAirline().getName())).thenReturn(airline);
+        when(airplaneService.createAirplane(airplane.getModel(), airplane.getMaxCapacity(), airline)).thenReturn(airplane);
+
+        Airplane result = airplaneController.createAirplane(airplane);
+
+        assertEquals(airplane.getModel(), result.getModel());
+        assertEquals(airplane.getMaxCapacity(), result.getMaxCapacity());
+        assertEquals(airline.getName(), result.getAirline().getName());
+    }
+
+    @Test
+    public void testGetTotalCapacity() {
+        String airlineName = "Airline Test";
+        int totalCapacity = 1000;
+
+        Airline airline = new Airline();
+        airline.setName(airlineName);
+
+        when(airlineService.findByName(airlineName)).thenReturn(airline);
+        when(airplaneService.getTotalCapacity(airline)).thenReturn(totalCapacity);
+
+        int result = airplaneController.getTotalCapacity(airlineName);
+
+        assertEquals(totalCapacity, result);
+    }
+}

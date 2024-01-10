@@ -1,0 +1,78 @@
+package site.de.passagens.rest.api.controllertest;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.controller.TicketController;
+import site.de.passagens.restapi.entity.Ticket;
+import site.de.passagens.restapi.service.TicketService;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest(classes = RestApiApplication.class)
+public class TicketControllerTest {
+
+    @InjectMocks
+    TicketController ticketController;
+
+    @Mock
+    TicketService ticketService;
+
+    private Ticket ticket1;
+    private Ticket ticket2;
+    private List<Ticket> tickets;
+
+    @BeforeEach
+    public void setUp() {
+        ticket1 = new Ticket();
+        ticket1.setId(1L);
+
+        ticket2 = new Ticket();
+        ticket2.setId(2L);
+
+        tickets = Arrays.asList(ticket1, ticket2);
+
+        when(ticketService.getAllTickets()).thenReturn(tickets);
+        when(ticketService.getTicket(1L)).thenReturn(ticket1);
+        when(ticketService.createTicket(any(Ticket.class))).thenReturn(ticket1);
+        when(ticketService.updateTicket(anyLong(), any(Ticket.class))).thenReturn(ticket1);
+        doNothing().when(ticketService).deleteTicket(anyLong());
+    }
+
+    @Test
+    public void testGetAllTickets() {
+        List<Ticket> result = ticketController.getAllTickets();
+        assertEquals(tickets.size(), result.size());
+    }
+
+    @Test
+    public void testGetTicket() {
+        Ticket result = ticketController.getTicket(1L);
+        assertEquals(ticket1.getId(), result.getId());
+    }
+
+    @Test
+    public void testCreateTicket() {
+        Ticket result = ticketController.createTicket(ticket1);
+        assertEquals(ticket1.getId(), result.getId());
+    }
+
+    @Test
+    public void testUpdateTicket() {
+        Ticket result = ticketController.updateTicket(1L, ticket1);
+        assertEquals(ticket1.getId(), result.getId());
+    }
+
+    @Test
+    public void testDeleteTicket() {
+        ticketController.deleteTicket(1L);
+        verify(ticketService, times(1)).deleteTicket(1L);
+    }
+}

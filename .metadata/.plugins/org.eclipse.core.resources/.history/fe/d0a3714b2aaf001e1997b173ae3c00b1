@@ -1,0 +1,52 @@
+package site.de.passagens.restapi.service;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import site.de.passagens.REST.API.entity.Ticket;
+import site.de.passagens.restapi.repository.TicketRepository;
+import site.de.passagens.REST.API.NotFoundException.TicketNotFoundException;
+
+@Service
+public class TicketService {
+
+    private final TicketRepository ticketRepository;
+
+    public TicketService(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
+
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
+    }
+
+    public Ticket getTicket(Long id) {
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new TicketNotFoundException("Ticket with id " + id + " does not exist"));
+    }
+
+    public Ticket createTicket(Ticket ticket) {
+        // Adicione aqui a validação do ticket
+        return ticketRepository.save(ticket);
+    }
+
+    public Ticket updateTicket(Long id, Ticket ticketDetails) {
+        Ticket ticket = getTicket(id);
+        if(ticket != null) {
+            ticket.setName(ticketDetails.getName());
+            ticket.setPassportNumber(ticketDetails.getPassportNumber());
+            ticket.setCpf(ticketDetails.getCpf());
+            ticket.setRg(ticketDetails.getRg());
+            return ticketRepository.save(ticket);
+        }
+        throw new TicketNotFoundException("Ticket with id " + id + " does not exist");
+    }
+
+    public void deleteTicket(Long id) {
+        Ticket ticket = getTicket(id);
+        if(ticket != null) {
+            ticketRepository.delete(ticket);
+        } else {
+            throw new TicketNotFoundException("Ticket with id " + id + " does not exist");
+        }
+    }
+}

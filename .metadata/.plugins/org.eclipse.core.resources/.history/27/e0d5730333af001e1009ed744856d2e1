@@ -1,0 +1,15 @@
+package site.de.passagens.rest.api.servicetest;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import site.de.passagens.restapi.service.AirlineService;
+
+@Configuration
+public class TestConfig {
+
+    @Bean
+    public AirlineService airlineService() {
+        // Retorne uma instância mock ou stub de AirlineService para uso em testes
+        return new AirlineService();
+    }
+}

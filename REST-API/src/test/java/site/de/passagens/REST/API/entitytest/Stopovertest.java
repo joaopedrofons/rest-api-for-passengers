@@ -1,10 +1,11 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 import java.time.Duration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import site.de.passagens.REST.API.entity.Flight;
-import site.de.passagens.REST.API.entity.Stopover;
+
+import site.de.passagens.restapi.entity.Flight;
+import site.de.passagens.restapi.entity.Stopover;
 
 public class StopoverTest {
 

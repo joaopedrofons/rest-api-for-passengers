@@ -1,0 +1,62 @@
+package site.de.passagens.restapi.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import site.de.passagens.REST.API.entity.Airline;
+import site.de.passagens.REST.API.repository.AirlineRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AirlineService {
+
+    private final AirlineRepository airlineRepository;
+
+    @Autowired
+    public AirlineService(AirlineRepository airlineRepository) {
+        this.airlineRepository = airlineRepository;
+    }
+
+    public Airline createAirLine(Airline airline) {
+        validateAirline(airline);
+        return airlineRepository.save(airline);
+    }
+
+    private void validateAirline(Airline airline) {
+        if (airline == null) {
+            throw new IllegalArgumentException("Airline cannot be null.");
+        }
+        String name = airline.getName();
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Airline name cannot be null or empty.");
+        }
+        airline.setName(name.trim());
+    }
+
+    public Optional<Airline> findByName(String name) {
+        return airlineRepository.findByName(name);
+    }
+
+    public List<Airline> getAllAirlines() {
+        return airlineRepository.findAll();
+    }
+
+    public Airline save(Airline airline) {
+        validateAirline(airline);
+        return airlineRepository.save(airline);
+    }
+
+    public void delete(Airline airline) {
+        airlineRepository.delete(airline);
+    }
+
+    public Airline findById(Long id) {
+        return airlineRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid airline ID: " + id));
+    }
+
+	public Airline createAirLine(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

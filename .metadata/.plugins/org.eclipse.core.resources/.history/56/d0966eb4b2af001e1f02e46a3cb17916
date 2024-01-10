@@ -1,0 +1,91 @@
+package site.de.passagens.rest.api.controllertest;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.controller.AirplaneController;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.service.AirlineService;
+import site.de.passagens.restapi.service.AirplaneService;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest(classes = RestApiApplication.class)
+public class AirplaneControllerTest {
+
+    @InjectMocks
+    AirplaneController airplaneController;
+
+    @Mock
+    AirplaneService airplaneService;
+
+    @Mock
+    AirlineService airlineService;
+
+    private Airplane airplane;
+    private Airline airline;
+    private List<Airplane> airplanes;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
+        airplane = new Airplane();
+        airplane.setModel("Model Test");
+        airplane.setMaxCapacity(200);
+
+        airline = new Airline();
+        airline.setName("Airline Test");
+
+        airplane.setAirline(airline);
+
+        airplanes = Arrays.asList(airplane);
+
+        when(airlineService.findByName(airline.getName())).thenReturn(Optional.of(airline));
+        when(airplaneService.getAllAirplanes()).thenReturn(airplanes);
+        when(airplaneService.getAirplaneById(anyLong())).thenReturn(Optional.of(airplane));
+        when(airplaneService.createAirplane(any(Airplane.class))).thenReturn(Optional.of(airplane));
+        when(airplaneService.updateAirplane(anyLong(), any(Airplane.class))).thenReturn(Optional.of(airplane));
+        doNothing().when(airplaneService).deleteAirplane(anyLong());
+    }
+
+    @Test
+    public void testGetAllAirplanes() {
+        List<Airplane> result = airplaneController.getAllAirplanes();
+        assertEquals(airplanes.size(), result.size());
+    }
+
+    @Test
+    public void testGetAirplaneById() {
+        Airplane result = airplaneController.getAirplaneById(1L).orElse(null);
+        assertEquals(airplane.getId(), result.getId());
+    }
+
+    @Test
+    public void testCreateAirplane() {
+        Airplane result = airplaneController.createAirplane(airplane).orElse(null);
+        assertEquals(airplane.getId(), result.getId());
+    }
+
+    @Test
+    public void testUpdateAirplane() {
+        Airplane result = airplaneController.updateAirplane(1L, airplane).orElse(null);
+        assertEquals(airplane.getId(), result.getId());
+    }
+
+    @Test
+    public void testDeleteAirplane() {
+        airplaneController.deleteAirplane(1L);
+        verify(airplaneService, times(1)).deleteAirplane(1L);
+    }
+}

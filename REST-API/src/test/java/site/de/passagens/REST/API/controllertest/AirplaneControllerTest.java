@@ -1,73 +1,46 @@
-package site.de.passagens.REST.API.controllertest;
+package site.de.passagens.rest.api.controllertest;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import site.de.passagens.REST.API.RestApiApplication;
-import site.de.passagens.REST.API.controller.AirplaneController;
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.entity.Airplane;
-import site.de.passagens.REST.API.service.AirlineService;
-import site.de.passagens.REST.API.service.AirplaneService;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import site.de.passagens.restapi.controller.AirplaneController;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.service.AirplaneService;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-@SpringBootTest(classes = RestApiApplication.class)
+@ExtendWith(MockitoExtension.class)
 public class AirplaneControllerTest {
 
+    @Mock
+    private AirplaneService airplaneService;
+
     @InjectMocks
-    AirplaneController airplaneController;
-
-    @Mock
-    AirplaneService airplaneService;
-
-    @Mock
-    AirlineService airlineService;
-
-    private static final String AIRLINE_NAME = "Airline Test";
-    private static final String MODEL_NAME = "Model Test";
-    private static final int MAX_CAPACITY = 200;
-    private static final int TOTAL_CAPACITY = 1000;
-
-    private Airplane airplane;
-    private Airline airline;
-
-    @BeforeEach
-    public void setup() {
-        airplane = new Airplane();
-        airplane.setModel(MODEL_NAME);
-        airplane.setMaxCapacity(MAX_CAPACITY);
-
-        airline = new Airline();
-        airline.setName(AIRLINE_NAME);
-
-        airplane.setAirline(airline);
-    }
+    private AirplaneController airplaneController;
 
     @Test
-    public void testCreateAirplane() {
-        when(airlineService.findByName(airplane.getAirline().getName())).thenReturn(Optional.of(airline));
-        when(airplaneService.createAirplane(airplane.getModel(), airplane.getMaxCapacity(), airline)).thenReturn(airplane);
+    public void testGetAirplane() {
+        // Crie um avião fictício
+        Airplane airplane = new Airplane();
+        airplane.setId(1L);
+        airplane.setName("Boeing 747");
 
-        Airplane result = airplaneController.createAirplane(airplane);
+        // Defina o comportamento do serviço fictício
+        when(airplaneService.getAirplaneById(1L)).thenReturn(Optional.ofNullable(airplane));
 
-        assertEquals(airplane.getModel(), result.getModel());
-        assertEquals(airplane.getMaxCapacity(), result.getMaxCapacity());
-        assertEquals(airline.getName(), result.getAirline().getName());
-    }
+        // Chame o método que você quer testar
+        Optional<Airplane> result = airplaneController.getAirplane(1L);
 
-    @Test
-    public void testGetTotalCapacity() {
-        when(airlineService.findByName(AIRLINE_NAME)).thenReturn(Optional.of(airline));
-        when(airplaneService.getTotalCapacity(airline)).thenReturn(TOTAL_CAPACITY);
+        // Verifique se o resultado é o esperado
+        assertEquals(Optional.ofNullable(airplane), result);
 
-        int result = airplaneController.getTotalCapacity(AIRLINE_NAME);
-
-        assertEquals(TOTAL_CAPACITY, result);
+        // Verifique se o método do serviço fictício foi chamado exatamente uma vez
+        verify(airplaneService, times(1)).getAirplaneById(1L);
     }
 }

@@ -1,0 +1,5 @@
+package site.de.passagens.rest.api.servicetest;
+
+public class TestConfig {
+
+}

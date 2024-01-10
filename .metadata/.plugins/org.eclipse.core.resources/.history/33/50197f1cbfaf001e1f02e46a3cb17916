@@ -1,0 +1,72 @@
+package site.de.passagens.restapi.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.repository.AirplaneRepository;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AirplaneService {
+
+    private final AirplaneRepository airplaneRepository;
+    private final AirlineService airlineService;
+
+    @Autowired
+    public AirplaneService(AirplaneRepository airplaneRepository, AirlineService airlineService) {
+        this.airplaneRepository = airplaneRepository;
+        this.airlineService = airlineService;
+    }
+
+    public List<Airplane> getAllAirplanes() {
+        return airplaneRepository.findAll();
+    }
+
+    public Optional<Airplane> getAirplaneById(Long id) {
+        return airplaneRepository.findById(id);
+    }
+
+    public Airplane createAirplane(String model, int maxCapacity, Airline airline) {
+        Airplane airplane = new Airplane(model, maxCapacity, airline);
+        return airplaneRepository.save(airplane);
+    }
+
+    public Optional<Airplane> createAirplane(Airplane airplane) {
+        return Optional.of(airplaneRepository.save(airplane));
+    }
+
+    public Optional<Airplane> updateAirplane(Long id, Airplane newAirplane) {
+        return airplaneRepository.findById(id)
+                .map(airplane -> {
+                    airplane.setModel(newAirplane.getModel());
+                    airplane.setMaxCapacity(newAirplane.getMaxCapacity());
+                    airplane.setAirline(newAirplane.getAirline());
+                    return Optional.of(airplaneRepository.save(airplane));
+                })
+                .orElseGet(() -> {
+                    newAirplane.setId(id);
+                    return Optional.of(airplaneRepository.save(newAirplane));
+                });
+    }
+
+    public void deleteAirplane(Long id) {
+        airplaneRepository.deleteById(id);
+    }
+
+    public int getTotalCapacity(Airline airline) {
+        return ((Collection<Airplane>) airplaneRepository.findByAirline(airline)).stream().mapToInt(Airplane::getMaxCapacity).sum();
+    }
+
+    public int getTotalCapacity(String airlineName) {
+        Airline airline = airlineService.findByName(airlineName).orElse(null);
+        if (airline != null) {
+            return ((Collection<Airplane>) airplaneRepository.findByAirline(airline)).stream().mapToInt(Airplane::getMaxCapacity).sum();
+        } else {
+            return 0;
+        }
+    }
+}

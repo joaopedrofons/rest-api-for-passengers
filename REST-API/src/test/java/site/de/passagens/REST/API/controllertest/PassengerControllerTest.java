@@ -1,21 +1,23 @@
-package site.de.passagens.REST.API.controllertest;
+package site.de.passagens.rest.api.controllertest;
 
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import site.de.passagens.REST.API.RestApiApplication;
-import site.de.passagens.REST.API.controller.PassengerController;
-import site.de.passagens.REST.API.entity.Passenger;
-import site.de.passagens.REST.API.service.PassengerService;
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.controller.PassengerController;
+import site.de.passagens.restapi.entity.Passenger;
+import site.de.passagens.restapi.service.PassengerService;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
 @SpringBootTest(classes = RestApiApplication.class)
 public class PassengerControllerTest {
 

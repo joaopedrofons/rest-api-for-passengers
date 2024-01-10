@@ -1,4 +1,5 @@
-package site.de.passagens.REST.API.repositorytest;
+package site.de.passagens.rest.api.repositorytest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -7,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.test.context.ContextConfiguration;
 
-import site.de.passagens.REST.API.entity.Ticket;
-import site.de.passagens.REST.API.repository.TicketRepository;
-import site.de.passagens.REST.API.servicetest.TestConfig;
+import site.de.passagens.rest.api.servicetest.TestConfig;
+import site.de.passagens.restapi.entity.Ticket;
+import site.de.passagens.restapi.repository.TicketRepository;
+
 
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)

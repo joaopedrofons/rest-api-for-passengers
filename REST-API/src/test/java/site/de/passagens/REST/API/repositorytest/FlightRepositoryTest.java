@@ -1,15 +1,15 @@
-package site.de.passagens.REST.API.repositorytest;
+package site.de.passagens.rest.api.repositorytest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import site.de.passagens.REST.API.RestApiApplication;
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.entity.Flight;
-import site.de.passagens.REST.API.repository.AirlineRepository;
-import site.de.passagens.REST.API.repository.FlightRepository;
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Flight;
+import site.de.passagens.restapi.repository.AirlineRepository;
+import site.de.passagens.restapi.repository.FlightRepository;
 
 import java.util.List;
 

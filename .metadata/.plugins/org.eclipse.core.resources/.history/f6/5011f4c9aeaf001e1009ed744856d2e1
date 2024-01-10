@@ -1,0 +1,78 @@
+package site.de.passagens.rest.api.controllertest;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import site.de.passagens.restapi.controller.AirlineController;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.service.AirlineService;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+public class AirlineControllerTest {
+
+    @InjectMocks
+    AirlineController airlineController;
+
+    @Mock
+    AirlineService airlineService;
+
+    private Airline airline;
+    private List<Airline> airlines;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
+        airline = new Airline();
+        airline.setName("Airline Test");
+
+        airlines = Arrays.asList(airline);
+
+        when(airlineService.getAllAirlines()).thenReturn(airlines);
+        when(airlineService.getAirlineById(anyLong())).thenReturn(Optional.of(airline));
+        when(airlineService.createAirline(any(Airline.class))).thenReturn(airline);
+        when(airlineService.updateAirline(anyLong(), any(Airline.class))).thenReturn(airline);
+        doNothing().when(airlineService).deleteAirline(anyLong());
+    }
+
+    @Test
+    public void testGetAllAirlines() {
+        List<Airline> result = airlineController.getAllAirlines();
+        assertEquals(airlines.size(), result.size());
+    }
+
+    @Test
+    public void testGetAirlineById() {
+        Airline result = airlineController.getAirlineById(1L).orElse(null);
+        assertEquals(airline.getId(), result.getId());
+    }
+
+    @Test
+    public void testCreateAirline() {
+        Airline result = airlineController.createAirline(airline).orElse(null);
+        assertEquals(airline.getId(), result.getId());
+    }
+
+    @Test
+    public void testUpdateAirline() {
+        Airline result = airlineController.updateAirline(1L, airline).orElse(null);
+        assertEquals(airline.getId(), result.getId());
+    }
+
+    @Test
+    public void testDeleteAirline() {
+        airlineController.deleteAirline(1L);
+        verify(airlineService, times(1)).deleteAirline(1L);
+    }
+}

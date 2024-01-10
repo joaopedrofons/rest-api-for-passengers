@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.servicetest;
+package site.de.passagens.rest.api.servicetest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,10 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.entity.Flight;
-import site.de.passagens.REST.API.repository.FlightRepository;
-import site.de.passagens.REST.API.service.FlightService;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Flight;
+import site.de.passagens.restapi.repository.FlightRepository;
+import site.de.passagens.restapi.service.FlightService;
 
 @ExtendWith(MockitoExtension.class)
 public class FlightServiceTest {

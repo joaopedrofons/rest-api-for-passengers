@@ -1,0 +1,5 @@
+package site.de.passagens.restapi.controller;
+
+public class AirplaneController {
+
+}

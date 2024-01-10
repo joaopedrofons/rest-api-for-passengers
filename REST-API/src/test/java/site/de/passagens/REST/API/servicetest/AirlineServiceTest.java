@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.servicetest;
+package site.de.passagens.rest.api.servicetest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.repository.AirlineRepository;
-import site.de.passagens.REST.API.service.AirlineService;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.repository.AirlineRepository;
+import site.de.passagens.restapi.service.AirlineService;
 
 @ExtendWith(MockitoExtension.class)
 public class AirlineServiceTest {
@@ -29,25 +29,25 @@ public class AirlineServiceTest {
 
     @Test
     public void testCreateAirline() {
-        String name = "Test Airline";
-        Airline airline = new Airline(name);
-        when(airlineRepository.save(any(Airline.class))).thenReturn(airline);
+        String nomeDaCompanhiaAerea = "Test Airline";
+        Airline companhiaAereaEsperada = new Airline(nomeDaCompanhiaAerea);
+        when(airlineRepository.save(any(Airline.class))).thenReturn(companhiaAereaEsperada);
 
-        Airline createdAirline = airlineService.createAirLine(name);
+        Airline companhiaAereaCriada = (Airline) airlineService.createAirLine(nomeDaCompanhiaAerea);
 
-        assertNotNull(createdAirline);
-        assertEquals(name, createdAirline.getName());
+        assertNotNull(companhiaAereaCriada);
+        assertEquals(nomeDaCompanhiaAerea, companhiaAereaCriada.getName());
     }
 
     @Test
     public void testFindByName() {
-        String name = "Test Airline";
-        Airline airline = new Airline(name);
-        when(airlineRepository.findByName(name)).thenReturn(Optional.of(airline));
+        String nomeDaCompanhiaAerea = "Test Airline";
+        Airline companhiaAereaEsperada = new Airline(nomeDaCompanhiaAerea);
+        when(airlineRepository.findByName(nomeDaCompanhiaAerea)).thenReturn(Optional.of(companhiaAereaEsperada));
 
-        Optional<Airline> foundAirline = airlineService.findByName(name);
+        Optional<Airline> companhiaAereaEncontrada = airlineService.findByName(nomeDaCompanhiaAerea);
 
-        assertTrue(foundAirline.isPresent());
-        assertEquals(name, foundAirline.get().getName());
+        assertTrue(companhiaAereaEncontrada.isPresent());
+        assertEquals(nomeDaCompanhiaAerea, companhiaAereaEncontrada.get().getName());
     }
 }

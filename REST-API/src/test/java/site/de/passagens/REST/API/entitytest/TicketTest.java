@@ -1,8 +1,10 @@
-package site.de.passagens.REST.API.entitytest;
+package site.de.passagens.rest.api.entitytest;
 
 import org.junit.jupiter.api.Test;
+
+import site.de.passagens.restapi.entity.Ticket;
+
 import org.junit.jupiter.api.Assertions;
-import site.de.passagens.REST.API.entity.Ticket;
 
 public class TicketTest {
 

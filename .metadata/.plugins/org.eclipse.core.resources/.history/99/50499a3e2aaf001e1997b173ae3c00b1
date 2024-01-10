@@ -1,0 +1,53 @@
+package site.de.passagens.rest.api.servicetest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import site.de.passagens.REST.API.entity.Airline;
+import site.de.passagens.REST.API.repository.AirlineRepository;
+import site.de.passagens.REST.API.service.AirlineService;
+
+@ExtendWith(MockitoExtension.class)
+public class AirlineServiceTest {
+
+    @Mock
+    private AirlineRepository airlineRepository;
+
+    @InjectMocks
+    private AirlineService airlineService;
+
+    @Test
+    public void testCreateAirline() {
+        String name = "Test Airline";
+        Airline airline = new Airline(name);
+        when(airlineRepository.save(any(Airline.class))).thenReturn(airline);
+
+        Airline createdAirline = airlineService.createAirLine(name);
+
+        assertNotNull(createdAirline);
+        assertEquals(name, createdAirline.getName());
+    }
+
+    @Test
+    public void testFindByName() {
+        String name = "Test Airline";
+        Airline airline = new Airline(name);
+        when(airlineRepository.findByName(name)).thenReturn(Optional.of(airline));
+
+        Optional<Airline> foundAirline = airlineService.findByName(name);
+
+        assertTrue(foundAirline.isPresent());
+        assertEquals(name, foundAirline.get().getName());
+    }
+}

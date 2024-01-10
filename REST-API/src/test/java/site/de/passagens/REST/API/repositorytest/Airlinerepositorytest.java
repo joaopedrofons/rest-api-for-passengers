@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.repositorytest;
+package site.de.passagens.rest.api.repositorytest;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import site.de.passagens.REST.API.entity.Airline;
-import site.de.passagens.REST.API.repository.AirlineRepository;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.repository.AirlineRepository;
 
 public class AirlineRepositoryTest {
 

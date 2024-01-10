@@ -1,0 +1,71 @@
+package site.de.passagens.restapi.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.repository.AirplaneRepository;
+
+import java.util.Collection;
+import java.util.List;
+
+@Service
+public class AirplaneService {
+
+    private final AirplaneRepository airplaneRepository;
+    private final AirlineService airlineService;
+
+    @Autowired
+    public AirplaneService(AirplaneRepository airplaneRepository, AirlineService airlineService) {
+        this.airplaneRepository = airplaneRepository;
+        this.airlineService = airlineService;
+    }
+
+    public List<Airplane> getAllAirplanes() {
+        return airplaneRepository.findAll();
+    }
+
+    public Airplane getAirplaneById(Long id) {
+        return airplaneRepository.findById(id).orElse(null);
+    }
+
+    public Airplane createAirplane(String model, int maxCapacity, Airline airline) {
+        Airplane airplane = new Airplane(model, maxCapacity, airline);
+        return airplaneRepository.save(airplane);
+    }
+
+    public Airplane createAirplane(Airplane airplane) {
+        return airplaneRepository.save(airplane);
+    }
+
+    public Airplane updateAirplane(Long id, Airplane newAirplane) {
+        return airplaneRepository.findById(id)
+                .map(airplane -> {
+                    airplane.setModel(newAirplane.getModel());
+                    airplane.setMaxCapacity(newAirplane.getMaxCapacity());
+                    airplane.setAirline(newAirplane.getAirline());
+                    return airplaneRepository.save(airplane);
+                })
+                .orElseGet(() -> {
+                    newAirplane.setId(id);
+                    return airplaneRepository.save(newAirplane);
+                });
+    }
+
+    public void deleteAirplane(Long id) {
+        airplaneRepository.deleteById(id);
+    }
+
+    public int getTotalCapacity(Airline airline) {
+        return ((Collection<Airplane>) airplaneRepository.findByAirline(airline)).stream().mapToInt(Airplane::getMaxCapacity).sum();
+    }
+
+    public int getTotalCapacity(String airlineName) {
+        Airline airline = airlineService.findByName(airlineName);
+        if (airline != null) {
+            return ((Collection<Airplane>) airplaneRepository.findByAirline(airline)).stream().mapToInt(Airplane::getMaxCapacity).sum();
+        } else {
+            return 0;
+        }
+    }
+}

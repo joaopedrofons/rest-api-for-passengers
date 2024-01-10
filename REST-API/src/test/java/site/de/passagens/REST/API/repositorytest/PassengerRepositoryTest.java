@@ -1,4 +1,4 @@
-package site.de.passagens.REST.API.repositorytest;
+package site.de.passagens.rest.api.repositorytest;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import site.de.passagens.REST.API.entity.Passenger;
-import site.de.passagens.REST.API.repository.PassengerRepository;
+import site.de.passagens.restapi.entity.Passenger;
+import site.de.passagens.restapi.repository.PassengerRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
