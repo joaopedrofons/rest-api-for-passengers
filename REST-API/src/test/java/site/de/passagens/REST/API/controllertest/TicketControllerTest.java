@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import site.de.passagens.restapi.controller.TicketController;
 import site.de.passagens.restapi.entity.Ticket;
@@ -17,7 +16,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(MockitoExtension.class)
 public class TicketControllerTest {
 
     @InjectMocks
@@ -25,11 +26,6 @@ public class TicketControllerTest {
 
     @Mock
     TicketService ticketService;
-
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void testGetAllTickets() {

@@ -1,0 +1,47 @@
+package site.de.passagens.rest.api.repositorytest;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+import site.de.passagens.restapi.repository.AirlineRepository;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@DataJpaTest
+public class AirplaneRepositoryTest {
+
+    private static final String TEST_AIRLINE_NAME = "LATAM";
+    private static final int EXPECTED_AIRPLANE_COUNT = 2;
+
+    @Autowired
+    private AirlineRepository airlineRepository;
+
+    @Test
+    @Transactional
+    public void testFindByAirline() {
+        // Create test airline with associated airplanes
+        Airline airline = createTestAirlineWithAirplanes();
+
+        // Persist data using the repository (preferred for clarity and consistency)
+        airlineRepository.save(airline);
+
+        // Retrieve airline by name and assert airplane count
+        List<Airplane> airplanes = airlineRepository.findByName(TEST_AIRLINE_NAME)
+                                                      .orElseThrow(() -> new IllegalStateException("Airline not found"))
+                                                      .getAirplanes();
+        assertEquals(EXPECTED_AIRPLANE_COUNT, airplanes.size());
+    }
+
+    private Airline createTestAirlineWithAirplanes() {
+        Airline airline = new Airline(TEST_AIRLINE_NAME);
+        airline.addAirplane(new Airplane("Boeing 737-800"));
+        airline.addAirplane(new Airplane("Airbus A320"));
+        return airline;
+    }
+}

@@ -1,0 +1,15 @@
+package site.de.passagens.restapi.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import site.de.passagens.restapi.entity.Airline;
+
+@Repository
+public interface AirlineRepository extends JpaRepository<Airline, Long> {
+
+	Airline findByName(String name);
+    // ... repository implementation ...
+}

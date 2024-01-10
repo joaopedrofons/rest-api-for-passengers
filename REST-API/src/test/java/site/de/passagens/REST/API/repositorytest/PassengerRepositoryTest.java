@@ -3,19 +3,21 @@ package site.de.passagens.rest.api.repositorytest;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.jboss.jandex.Main;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import site.de.passagens.restapi.entity.Passenger;
 import site.de.passagens.restapi.repository.PassengerRepository;
+import site.de.passagens.restapi.RestApiApplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RestApiApplication.class)
 class PassengerRepositoryTest {
 
     @Autowired
@@ -31,14 +33,14 @@ class PassengerRepositoryTest {
     @Test
     public void testFindById() {
         // Save the passenger
-        passenger = passengerRepository.save(passenger);
-        assertNotNull(passenger.getId());
+        Passenger savedPassenger = passengerRepository.save(passenger);
+        assertNotNull(savedPassenger.getId());
 
         // Find the passenger
-        Optional<Passenger> foundPassenger = passengerRepository.findById(passenger.getId());
+        Optional<Passenger> foundPassenger = passengerRepository.findById(savedPassenger.getId());
 
         // Assert the passenger was found and is the same as the saved passenger
-        assertEquals(passenger, foundPassenger.orElse(null));
+        assertEquals(savedPassenger, foundPassenger.orElse(null));
     }
 
     // ... other tests ...

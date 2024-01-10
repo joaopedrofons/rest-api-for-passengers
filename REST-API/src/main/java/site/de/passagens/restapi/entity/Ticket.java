@@ -41,7 +41,7 @@ public class Ticket {
 
     public boolean isCpfValid(String cpf) {
         // Implementação básica de validação do CPF
-        if (cpf == null || !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+        if (cpf == null || !cpf.replaceAll("\\D", "").matches("\\d{11}")) {
             return false;
         }
         // Adicione mais lógica de validação conforme necessário
@@ -50,10 +50,42 @@ public class Ticket {
 
     public boolean isRgValid(String rg) {
         // Implementação básica de validação do RG
-        if (rg == null || !rg.matches("\\d{2}\\.\\d{3}\\.\\d{3}-\\d{1}")) {
+        if (rg == null || !rg.replaceAll("\\D", "").matches("\\d{9}")) {
             return false;
         }
         // Adicione mais lógica de validação conforme necessário
         return true;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassportNumber() {
+        return this.passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
+    public String getCpf() {
+        return this.cpf;
+    }
+
+    public String getRg() {
+        return this.rg;
     }
 }

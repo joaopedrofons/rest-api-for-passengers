@@ -1,0 +1,43 @@
+package site.de.passagens.rest.api.repositorytest;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import site.de.passagens.restapi.RestApiApplication;
+import site.de.passagens.restapi.entity.Airline;
+import site.de.passagens.restapi.entity.Airplane;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@SpringBootTest(classes = RestApiApplication.class)
+public class AirplaneRepositoryTest {
+
+    private static final String TEST_AIRLINE_NAME = "LATAM";
+    private static final int EXPECTED_AIRPLANE_COUNT = 2;
+
+    @Autowired
+    private EntityManager entityManager;  // Use EntityManager directly for simplicity
+
+    @Test
+    @Transactional
+    public void testFindByAirline() {
+        Airline airline = new Airline(TEST_AIRLINE_NAME);
+        entityManager.persist(airline);
+
+        Airplane airplane1 = new Airplane("Boeing 737-800", airline);
+        Airplane airplane2 = new Airplane("Airbus A320", airline);
+        entityManager.persist(airplane1);
+        entityManager.persist(airplane2);
+
+        entityManager.flush(); // Ensure data is persisted before querying
+
+        List<Airplane> airplanes = entityManager.find(Airline.class, TEST_AIRLINE_NAME).getAirplanes();
+
+        assertEquals(EXPECTED_AIRPLANE_COUNT, airplanes.size());
+    }
+}
