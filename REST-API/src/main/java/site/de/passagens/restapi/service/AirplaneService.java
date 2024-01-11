@@ -1,14 +1,13 @@
 package site.de.passagens.restapi.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import site.de.passagens.restapi.entity.Airline;
 import site.de.passagens.restapi.entity.Airplane;
 import site.de.passagens.restapi.repository.AirplaneRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AirplaneService {
@@ -25,32 +24,35 @@ public class AirplaneService {
     }
 
     public int getTotalCapacity(Airline airline) {
-        List<Airplane> airplanes = (List<Airplane>) airplaneRepository.findByAirline(airline);
+        List<Airplane> airplanes = airplaneRepository.findByAirline(airline);
         return airplanes.stream().mapToInt(Airplane::getMaxCapacity).sum();
     }
 
-	public List<Airplane> getAllAirplanes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public List<Airplane> getAllAirplanes() {
+        return airplaneRepository.findAll();
+    }
 
-	public Optional<Airplane> getAirplaneById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Optional<Airplane> getAirplaneById(Long id) {
+        return airplaneRepository.findById(id);
+    }
 
-	public Airplane createAirplane(Airplane airplane) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Airplane createAirplane(Airplane airplane) {
+        return airplaneRepository.save(airplane);
+    }
 
-	public Airplane updateAirplane(Long id, Airplane airplane) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Airplane updateAirplane(Long id, Airplane newAirplane) {
+        Optional<Airplane> existingAirplane = airplaneRepository.findById(id);
+        if (existingAirplane.isPresent()) {
+            existingAirplane.get().setModel(newAirplane.getModel());
+            existingAirplane.get().setMaxCapacity(newAirplane.getMaxCapacity());
+            existingAirplane.get().setAirline(newAirplane.getAirline());
+            return airplaneRepository.save(existingAirplane.get());
+        } else {
+            return null;
+        }
+    }
 
-	public void deleteAirplane(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteAirplane(Long id) {
+        airplaneRepository.deleteById(id);
+    }
 }
