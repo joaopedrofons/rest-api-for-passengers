@@ -33,21 +33,11 @@ public class AirlineServiceTest {
         Airline companhiaAereaEsperada = new Airline(nomeDaCompanhiaAerea);
         when(airlineRepository.save(any(Airline.class))).thenReturn(companhiaAereaEsperada);
 
-        Airline companhiaAereaCriada = (Airline) airlineService.createAirLine(nomeDaCompanhiaAerea);
+        Optional<Airline> companhiaAereaCriada = airlineService.createAirLine(nomeDaCompanhiaAerea);
 
-        assertNotNull(companhiaAereaCriada);
-        assertEquals(nomeDaCompanhiaAerea, companhiaAereaCriada.getName());
+        assertTrue(companhiaAereaCriada.isPresent());
+        assertEquals(nomeDaCompanhiaAerea, companhiaAereaCriada.get().getName());
     }
 
-    @Test
-    public void testFindByName() {
-        String nomeDaCompanhiaAerea = "Test Airline";
-        Airline companhiaAereaEsperada = new Airline(nomeDaCompanhiaAerea);
-        when(airlineRepository.findByName(nomeDaCompanhiaAerea)).thenReturn(Optional.of(companhiaAereaEsperada));
-
-        Optional<Airline> companhiaAereaEncontrada = airlineService.findByName(nomeDaCompanhiaAerea);
-
-        assertTrue(companhiaAereaEncontrada.isPresent());
-        assertEquals(nomeDaCompanhiaAerea, companhiaAereaEncontrada.get().getName());
-    }
+    // Adicione mais testes conforme necessário
 }

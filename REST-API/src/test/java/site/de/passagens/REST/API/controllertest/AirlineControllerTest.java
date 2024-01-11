@@ -1,46 +1,41 @@
 package site.de.passagens.rest.api.controllertest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+
 import site.de.passagens.restapi.controller.AirlineController;
 import site.de.passagens.restapi.entity.Airline;
 import site.de.passagens.restapi.service.AirlineService;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-
-@SpringBootTest(classes = {MockitoTestExecutionListener.class})
+@ExtendWith(MockitoExtension.class)
 public class AirlineControllerTest {
 
-    @InjectMocks
-    AirlineController airlineController;
-
     @Mock
-    AirlineService airlineService;
+    private AirlineService airlineService;
+
+    @InjectMocks
+    private AirlineController airlineController;
 
     @Test
-    public void testCreateAirLine() {
-        String airlineName = "Test Airline";
+    public void testCreateAirline() {
+        String nomeDaCompanhiaAerea = "Test Airline";
+        Airline companhiaAereaEsperada = new Airline(nomeDaCompanhiaAerea);
+        when(airlineService.createAirLine(nomeDaCompanhiaAerea)).thenReturn(Optional.of(companhiaAereaEsperada));
 
-        Airline expectedAirline = createAirline(airlineName);
+        ResponseEntity<Airline> response = airlineController.createAirLine(companhiaAereaEsperada);
 
-        when(airlineService.createAirLine(airlineName)).thenReturn(expectedAirline);
-
-        Airline requestAirline = createAirline(airlineName);
-
-        Airline actualAirline = airlineController.createAirLine(requestAirline);
-
-        assertNotNull(actualAirline, "The airline is null.");
-        assertEquals(expectedAirline.getName(), actualAirline.getName());
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(nomeDaCompanhiaAerea, response.getBody().getName());
     }
 
-    private Airline createAirline(String airlineName) {
-        Airline airline = new Airline();
-        airline.setName(airlineName);
-        return airline;
-    }
+    // Adicione mais testes conforme necessário
 }

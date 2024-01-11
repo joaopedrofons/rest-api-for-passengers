@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import site.de.passagens.restapi.entity.Airline;
 import site.de.passagens.restapi.service.AirlineService;
 
@@ -25,9 +24,10 @@ public class AirlineController {
     }
 
     @PostMapping
-    public Airline createAirLine(@RequestBody Airline airline) {
+    public ResponseEntity<Airline> createAirLine(@RequestBody Airline airline) {
         logger.info("createAirLine chamado com nome: " + airline.getName());
-        return (Airline) airlineService.createAirLine(airline.getName());
+        Optional<Airline> createdAirline = airlineService.createAirLine(airline.getName());
+        return createdAirline.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @GetMapping
@@ -38,44 +38,30 @@ public class AirlineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Airline> getAirline(@PathVariable Long id) {
-        try {
-            Airline airline = airlineService.findById(id);
-            return ResponseEntity.ok(airline);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Airline> airline = airlineService.getAirlineById(id);
+        return airline.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Airline> updateAirline(@PathVariable Long id, @RequestBody Airline airline) {
-        try {
-            Airline existingAirline = airlineService.findById(id);
-            existingAirline.setName(airline.getName());
-            airlineService.save(existingAirline);
-            return ResponseEntity.ok(existingAirline);
-        } catch (IllegalArgumentException e) {
+        Optional<Airline> existingAirline = airlineService.getAirlineById(id);
+        if (existingAirline.isPresent()) {
+            existingAirline.get().setName(airline.getName());
+            airlineService.save(existingAirline.get());
+            return ResponseEntity.ok(existingAirline.get());
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAirline(@PathVariable Long id) {
-        try {
-            Airline airline = airlineService.findById(id);
-            airlineService.delete(airline);
+        Optional<Airline> airline = airlineService.getAirlineById(id);
+        if (airline.isPresent()) {
+            airlineService.delete(airline.get());
             return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-	public Optional<Airline> getAirlineById(long l) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Optional<Airline> createAirline(Airline airline) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

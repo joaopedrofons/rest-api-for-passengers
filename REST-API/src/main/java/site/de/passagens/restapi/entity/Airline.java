@@ -1,15 +1,9 @@
 package site.de.passagens.restapi.entity;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.util.Optional;
 
 @Entity
 public class Airline {
@@ -32,9 +26,7 @@ public class Airline {
 
     public void addAirplane(Airplane airplane) {
         this.airplanes.add(airplane);
-        if (airplane.getAirline() != this) {
-            airplane.setAirline(this);
-        }
+        airplane.setAirline(this);
     }
 
     public String getName() {
@@ -58,11 +50,13 @@ public class Airline {
     }
 
     public void setAirplanes(List<Airplane> airplanes) {
-        this.airplanes = new ArrayList<>(airplanes);
+        this.airplanes.clear();
+        if (airplanes != null) {
+            this.airplanes.addAll(airplanes);
+        }
     }
 
-	public Airline orElse(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Optional<Airline> orElse(Object object) {
+        return object instanceof Airline ? Optional.of((Airline) object) : Optional.empty();
+    }
 }

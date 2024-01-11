@@ -18,9 +18,9 @@ public class AirlineService {
         this.airlineRepository = airlineRepository;
     }
 
-    public Airline createAirLine(String airlineName) {
+    public Optional<Airline> createAirLine(String airlineName) {
         Airline airline = new Airline(airlineName);
-        return save(airline);
+        return Optional.ofNullable(save(airline));
     }
 
     private void validateAirline(Airline airline) {
@@ -54,24 +54,4 @@ public class AirlineService {
     public Optional<Airline> getAirlineById(long id) {
         return airlineRepository.findById(id);
     }
-
-	public Airline findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object createAirline(Airline any) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object updateAirline(long anyLong, Airline any) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void deleteAirline(long anyLong) {
-		// TODO Auto-generated method stub
-		
-	}
 }
